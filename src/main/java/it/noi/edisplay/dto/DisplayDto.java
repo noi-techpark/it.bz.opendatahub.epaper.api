@@ -16,10 +16,10 @@ public class DisplayDto {
 	private ResolutionDto resolution;
 	private String mac;
 	private String errorMessage;
-	private String locationUuid;
-    private DisplayContentDto displayContent;
-    private boolean ignoreScheduledContent;
-    private String warningMessage;
+	private String[] locationUuids;
+	private DisplayContentDto displayContent;
+	private boolean ignoreScheduledContent;
+	private String warningMessage;
 	private String uuid;
 	private String currentImageHash;
 
@@ -123,43 +123,43 @@ public class DisplayDto {
 		this.errorMessage = errorMessage;
 	}
 
-    public String getLocationUuid() {
-        return locationUuid;
-    }
+	public String[] getLocationUuids() {
+		return locationUuids;
+	}
 
-    public void setLocationUuid(String locationUuid) {
-        this.locationUuid = locationUuid;
-    }
+	public void setLocationUuids(String[] locationUuids) {
+		this.locationUuids = locationUuids;
+	}
 
-    public DisplayContentDto getDisplayContent() {
-        return displayContent;
-    }
+	public DisplayContentDto getDisplayContent() {
+		return displayContent;
+	}
 
-    public void setDisplayContent(DisplayContentDto displayContent) {
-        this.displayContent = displayContent;
-    }
+	public void setDisplayContent(DisplayContentDto displayContent) {
+		this.displayContent = displayContent;
+	}
 
-    public String getWarningMessage() {
-        return warningMessage;
-    }
+	public String getWarningMessage() {
+		return warningMessage;
+	}
 
-    public void setWarningMessage(String warningMessage) {
-        this.warningMessage = warningMessage;
-    }
+	public void setWarningMessage(String warningMessage) {
+		this.warningMessage = warningMessage;
+	}
 
-    public boolean getIgnoreScheduledContent() {
-        return ignoreScheduledContent;
-    }
+	public boolean getIgnoreScheduledContent() {
+		return ignoreScheduledContent;
+	}
 
-    public void setIgnoreScheduledContent(boolean ignoreScheduledContent) {
-        this.ignoreScheduledContent = ignoreScheduledContent;
-    }
+	public void setIgnoreScheduledContent(boolean ignoreScheduledContent) {
+		this.ignoreScheduledContent = ignoreScheduledContent;
+	}
 
-    public String getCurrentImageHash() {
-        return currentImageHash;
-    }
+	public String getCurrentImageHash() {
+		return currentImageHash;
+	}
 
-    public void setCurrentImageHash(String currentImageHash) {
-        this.currentImageHash = currentImageHash;
-    }
+	public void setCurrentImageHash(String currentImageHash) {
+		this.currentImageHash = currentImageHash;
+	}
 }

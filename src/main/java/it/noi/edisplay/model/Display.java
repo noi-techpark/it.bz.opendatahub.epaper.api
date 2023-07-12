@@ -35,10 +35,10 @@ public class Display {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//	@NotNull
+    // @NotNull
     private String name;
 
-//	@NotNull
+    // @NotNull
     private String uuid;
 
     @CreationTimestamp
@@ -61,15 +61,15 @@ public class Display {
 
     private String warningMessage;
 
-//	@NotNull
+    // @NotNull
     @ManyToOne
     private Resolution resolution;
 
     @ManyToOne
     private Template template;
 
-    @ManyToOne
-    private Location location;
+    @ManyToMany
+    private List<Location> locations;
 
     @OneToOne(mappedBy = "display", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private DisplayContent displayContent;
@@ -169,12 +169,15 @@ public class Display {
         this.template = template;
     }
 
-    public Location getLocation() {
-        return location;
+    public List<Location> getLocations() {
+        if (locations == null) {
+            locations = Collections.emptyList();
+        }
+        return locations;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public DisplayContent getDisplayContent() {
@@ -200,8 +203,10 @@ public class Display {
         eventAdvance *= 60000;
 
         // Location
-        if (this.getLocation() != null) {
-            fieldValues.put(ImageFieldType.LOCATION_NAME, this.getLocation().getName());
+        if (locations != null) {
+            for (Location location : locations) {
+                fieldValues.put(ImageFieldType.LOCATION_NAME, location.getName());
+            }
         } else {
             fieldValues.put(ImageFieldType.LOCATION_NAME, "Location not specified");
         }

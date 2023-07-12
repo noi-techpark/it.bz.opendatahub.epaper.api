@@ -121,13 +121,16 @@ public class DisplayController {
             display.setDisplayContent(null);
         }
 
-        if (displayDto.getLocationUuid() != null) {
-            Location location = locationRepository.findByUuid(displayDto.getLocationUuid());
-            if (location != null)
-                display.setLocation(location);
-            else {
-                logger.debug("Create display with uuid:" + displayDto.getUuid() + " failed. Location not found");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (displayDto.getLocationUuids() != null) {
+            for (String locationUuid : displayDto.getLocationUuids()) {
+
+                Location location = locationRepository.findByUuid(locationUuid);
+                if (location != null)
+                    display.getLocations().add(location);
+                else {
+                    logger.debug("Create display with uuid:" + displayDto.getUuid() + " failed. Location not found");
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
         }
 
@@ -183,13 +186,17 @@ public class DisplayController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        if (displayDto.getLocationUuid() != null) {
-            Location location = locationRepository.findByUuid(displayDto.getLocationUuid());
-            if (location != null)
-                display.setLocation(location);
-            else {
-                logger.debug("Update display with uuid:" + displayDto.getUuid() + " failed. Location not found");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (displayDto.getLocationUuids() != null) {
+            // reset locations
+            display.setLocations(null);
+            for (String locationUuid : displayDto.getLocationUuids()) {
+                Location location = locationRepository.findByUuid(locationUuid);
+                if (location != null)
+                    display.getLocations().add(location);
+                else {
+                    logger.debug("Update display with uuid:" + displayDto.getUuid() + " failed. Location not found");
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
         }
 
@@ -257,7 +264,7 @@ public class DisplayController {
                 // We need to validate the hash by checking if image field values are not
                 // out-dated
                 Map<ImageFieldType, String> fieldValues = display
-                        .getTextFieldValues(noiDataLoader.getNOIDisplayEvents(display),eventAdvance);
+                        .getTextFieldValues(noiDataLoader.getNOIDisplayEvents(display), eventAdvance);
 
                 for (ImageField field : displayContent.getImageFields()) {
                     if (field.getFieldType() != ImageFieldType.CUSTOM_TEXT && (field.getCurrentFieldValue() == null
