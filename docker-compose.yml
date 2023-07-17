@@ -27,6 +27,8 @@ services:
       - "${SERVER_PORT}:${SERVER_PORT}"
   postgres:
     image: "postgres:11-alpine"
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${DB_USERNAME}
